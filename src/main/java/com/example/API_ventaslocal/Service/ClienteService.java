@@ -21,7 +21,8 @@ public class ClienteService implements IClienteService{
 
     @Override
     public Cliente getClient(Long id) {
-        return iClienteRepository.findById(id).orElse(null);
+       Cliente cliente = iClienteRepository.findById(id).orElse(null);
+       return cliente;
     }
 
     @Override
@@ -37,6 +38,11 @@ public class ClienteService implements IClienteService{
 
     @Override
     public Cliente editClient(Long id, Cliente client) {
-        return null;
+        Cliente c = this.getClient(id);
+        c.setApellido(client.getApellido());
+        c.setDni(client.getDni());
+        c.setNombre(client.getNombre());
+        this.saveClient(c);
+        return c;
     }
 }
