@@ -33,8 +33,7 @@ public class VentaController {
 
     @PostMapping("/ventas/crear")
     public String saveSale(@RequestBody Venta venta){
-        iVentaService.saveSale(venta);
-        return "Venta Guardada con exito";
+        return iVentaService.saveSale(venta);
     }
 
     @DeleteMapping("/ventas/eliminar/{codigo_venta}")

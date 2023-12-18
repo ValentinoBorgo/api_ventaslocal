@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.Objects;
+
 @Entity
 public class Producto {
 
@@ -25,6 +27,30 @@ public class Producto {
     }
 
     public Producto() {
+    }
+
+    //Method to compare the veracity of the objects that contains the HashMap
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Producto producto = (Producto) obj;
+        return Objects.equals(this.codigo_producto, producto.codigo_producto) &&
+                Objects.equals(this.nombre, producto.nombre) &&
+                Objects.equals(this.marca, producto.marca) &&
+                Objects.equals(this.costo, producto.costo) &&
+                Objects.equals(this.cantidad_disponible, producto.cantidad_disponible);
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "codigo_producto=" + codigo_producto +
+                ", nombre='" + nombre + '\'' +
+                ", marca='" + marca + '\'' +
+                ", costo=" + costo +
+                ", cantidad_disponible=" + cantidad_disponible +
+                '}';
     }
 
     public Long getCodigo_producto() {

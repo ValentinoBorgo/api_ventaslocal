@@ -9,7 +9,7 @@ public interface IVentaService {
 
     public List<Venta> getSales();
 
-    public void saveSale(Venta venta);
+    public String saveSale(Venta venta);
 
     public String deleteSale(Long id);
 

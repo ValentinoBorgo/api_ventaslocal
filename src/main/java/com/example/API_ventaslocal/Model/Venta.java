@@ -31,6 +31,8 @@ public class Venta {
         this.cliente = cliente;
     }
 
+
+
     public Long getCodigo_venta() {
         return codigo_venta;
     }
