@@ -25,6 +25,11 @@ public class ProductoController {
         return IProductoService.searchProduct(codigo_producto);
     }
 
+    @GetMapping("/productos/falta_stock")
+    public List<Producto> getProductsLessThan5(){
+        return IProductoService.getProductsLessThan5();
+    }
+
     @PostMapping("/productos/crear")
     public String saveProduct(@RequestBody Producto producto){
         IProductoService.saveProduct(producto);
@@ -41,6 +46,7 @@ public class ProductoController {
     public Producto editProduct(@PathVariable Long codigo_producto, @RequestBody Producto proModi){
         return IProductoService.editProduct(codigo_producto, proModi);
     }
+
 
 
 }

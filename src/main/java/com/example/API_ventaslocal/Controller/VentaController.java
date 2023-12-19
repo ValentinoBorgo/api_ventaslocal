@@ -1,12 +1,15 @@
 package com.example.API_ventaslocal.Controller;
 
+import com.example.API_ventaslocal.Model.Producto;
 import com.example.API_ventaslocal.Model.Venta;
 import com.example.API_ventaslocal.Service.IVentaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -29,6 +32,21 @@ public class VentaController {
         }else{
             return new ResponseEntity<>(venta, HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/ventas/productos/{codigo_venta}")
+    public List<Producto> getListOfProductosOfSale(@PathVariable Long codigo_venta){
+        return iVentaService.getListOfProductosOfSale(codigo_venta);
+    }
+
+    @GetMapping("/ventas/dia/{fecha_venta}")
+    public String getAmountAndTotalOfSalesInADay(@PathVariable LocalDate fecha_venta){
+        return iVentaService.getAmountAndTotalOfSalesInADay(fecha_venta);
+    }
+
+    @GetMapping("/ventas/mayor_venta")
+    public String getDataOfTheMostExpensiveSale(){
+        return iVentaService.getDataOfTheMostExpensiveSale();
     }
 
     @PostMapping("/ventas/crear")

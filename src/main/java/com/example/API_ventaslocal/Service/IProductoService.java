@@ -17,4 +17,6 @@ public interface IProductoService {
 
     public Producto searchProduct(Long id);
 
+    public List<Producto> getProductsLessThan5();
+
 }

@@ -7,10 +7,8 @@ import com.example.API_ventaslocal.Repository.IVentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class VentaService implements IVentaService{
@@ -26,6 +24,17 @@ public class VentaService implements IVentaService{
     @Override
     public List<Venta> getSales() {
         return ventaRepository.findAll();
+    }
+
+    @Override
+    public List<Producto> getListOfProductosOfSale(Long id) {
+        Venta venta = this.searchSale(id);
+        if(venta == null){
+            List<Producto> noneProducts;
+            noneProducts = new ArrayList<>();
+            return noneProducts;
+        }
+        return venta.getListaProductos();
     }
 
     @Override
@@ -96,5 +105,48 @@ public class VentaService implements IVentaService{
     @Override
     public Venta searchSale(Long id) {
         return ventaRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public String getAmountAndTotalOfSalesInADay(LocalDate date) {
+        List<Venta> sales = this.getSales();
+        int contOfSales = 0;
+        Double totalAmount = 0.0;
+        for (Venta v : sales){
+            if(v.getFecha_venta().toString().equals(date.toString())){
+                contOfSales++;
+                totalAmount += v.getTotal();
+            }
+        }
+        return "La cantidad de ventas del dia " + date + " son de " + contOfSales
+                + " y todas juntas suman un monto total de " + totalAmount;
+    }
+
+    @Override
+    public String getDataOfTheMostExpensiveSale() {
+        String dataOfMostExpensiveSale = "";
+        List<Venta> sales = this.getSales();
+        Double maxTotal = 0.0;
+        int amountOfProducts = 0;
+        for (Venta v : sales){
+            if(v.getTotal() > maxTotal){
+                maxTotal = v.getTotal();
+                amountOfProducts =  v.getListaProductos().size();
+                dataOfMostExpensiveSale = "\b" + "Codigo Venta : " + v.getCodigo_venta() + "\n"
+                        + "Total USD : " + maxTotal + "\n"
+                        + "Cantidad de Productos : " + amountOfProducts + "\n"
+                        + "Nombre del Cliente : " + v.getCliente().getNombre() + "\n"
+                        + "Apellido del Cliente : " + v.getCliente().getApellido() + "\n";
+            }else if (Objects.equals(v.getTotal(), maxTotal)){
+                maxTotal = v.getTotal();
+                amountOfProducts =  v.getListaProductos().size();
+                dataOfMostExpensiveSale += "\b" + "Codigo Venta : " + v.getCodigo_venta() + "\n"
+                        + "Total USD : " + maxTotal + "\n"
+                        + "Cantidad de Productos : " + amountOfProducts + "\n"
+                        + "Nombre del Cliente : " + v.getCliente().getNombre() + "\n"
+                        + "Apellido del Cliente : " + v.getCliente().getApellido() + "\n";
+            }
+        }
+        return dataOfMostExpensiveSale;
     }
 }

@@ -5,6 +5,7 @@ import com.example.API_ventaslocal.Repository.IProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,5 +46,18 @@ public class ProductoService implements IProductoService{
     public Producto searchProduct(Long id) {
         Producto pro = productoRepository.findById(id).orElse(null);
         return pro;
+    }
+
+    @Override
+    public List<Producto> getProductsLessThan5() {
+        List<Producto> listProducts = this.getProducts();
+        List<Producto> listProductsLessThan5;
+        listProductsLessThan5 = new ArrayList<>();
+        for (Producto p : listProducts){
+            if(p.getCantidad_disponible() < 5){
+                listProductsLessThan5.add(p);
+            }
+        }
+        return listProductsLessThan5;
     }
 }
