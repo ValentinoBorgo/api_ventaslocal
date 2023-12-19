@@ -16,7 +16,7 @@ Api desarrollada para un local de ventas en Spring Boot utilizando mapeo de clas
 
 ## Instalación
 1 - Clonar el repositorio</br>
-2 - Abrir el proyecto en tu IDE Intelij o NetBeans.
+2 - Abrir el proyecto en tu IDE Intelij o NetBeans.</br>
 3 - Levantar un servidor local en XAMPP o WAMP</br>
 4 - Crear una base de datos con el nombre : api_ventaslocal</br>
 5 - Asociar la bd al proyecto en el archivo : src/main/resources/application.properties</br>
